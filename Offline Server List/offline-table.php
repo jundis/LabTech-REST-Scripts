@@ -1,9 +1,24 @@
+<html>
+<head>
+   <link rel="stylesheet" href="bootstrap.min.css" media="screen">
+</head>
+
+<div class="table-responsive">
+<table class="sortable table table-striped table-bordered table-hover"">
+	<thead>
+		<tr>
+			<th>Client</th>
+			<th>Server</th>
+			<th>Last Checkin</th>
+		</tr>
+	</thead>
+	<tbody>
 <?php
 ini_set('display_errors', 1); //Display errors in case something occurs
 
-$labtechurl = "https://lt.domain.tld" //Enter your LabTech URL here.
-$apikey = "LT API KEY HERE"; //Enter your LabTech REST API key here.
+$apikey = "API KEY"; //Enter your LabTech REST API key here.
 $timezone = "America/Chicago"; //Set your timezone here. 
+$labtechurl = "https://lt.domain.tld"; //Set your LabTech URL here.
 
 date_default_timezone_set($timezone);
 $datenow = date("Y-m-d\TH:i:s", strtotime("-10 minutes"));
@@ -40,13 +55,23 @@ curl_close($ch);
 //Funky conversion for LT Data.
 $dataTData = json_decode($curlBodyTData); //Decode the JSON returned by the CW API.
 $dataTData = json_decode(json_encode($dataTData->value),true);
-$dataTData = $dataTData[0];
 
-echo "<table>";
-foreach($dataTData as $k=>$v)
+foreach($dataTData as $array)
 {
-	echo "<tr><td>$k</d><td>$v</td></tr>";
+	$date=strtotime($array['LastCheckin']); //Convert date entered JSON result to time.
+	$dateformat=date('m-d-Y g:i:sa',$date); //Convert previously converted time to a better time string.
+	
+	echo "<tr>
+	<td>".$array['Client']."</td>
+	<td>".$array['Name']."</td>
+	<td bgcolor=#d48888>".$dateformat."</td>
+	</tr>";
 }
-echo "</table>";
+
 
 ?>
+
+	</tbody>
+</table>
+</div>
+</html>
