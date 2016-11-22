@@ -21,13 +21,22 @@ $ltuser="apiuser";
 $ltpassword="PASSWORD HERE";
 $timezone = "America/Chicago"; //Set your timezone here.
 $labtechurl = "https://lt.domain.tld"; //Set your LabTech URL here.
+$labtechversion = "11"; //Change to 10.5 or 10 if not on LT11.
 
 
 //Set variables
 date_default_timezone_set($timezone);
 $datenow = date("Y-m-d\TH:i:s", strtotime("-10 minutes"));
 $date7 = date("Y-m-d\TH:i:s", strtotime("-7 days"));
-$url = $labtechurl . '/WCC2/api/ComputerStubs?$filter=substringof(%27Server%27,OS)%20and%20LastCheckin%20lt%20datetime%27' . $datenow . "%27%20and%20LastCheckin%20gt%20datetime%27" . $date7 . "%27";
+$url = NULL; //to be changed in a moment. Prevents IDE errors.
+if ($labtechversion == "11")
+{
+	$url = $labtechurl . '/WCC2/api/ComputerStubs?$filter=contains(OS,%27Server%27)%20and%20LastCheckin%20lt%20' . $datenow . "Z%20and%20LastCheckin%20gt%20" . $date7 . "Z";
+}
+else
+{
+	$url = $labtechurl . '/WCC2/api/ComputerStubs?$filter=substringof(%27Server%27,OS)%20and%20LastCheckin%20lt%20datetime%27' . $datenow . "%27%20and%20LastCheckin%20gt%20datetime%27" . $date7 . "%27";
+}
 $urlapi = $labtechurl . '/WCC2/API/APIToken';
 
 //CURL for API key
