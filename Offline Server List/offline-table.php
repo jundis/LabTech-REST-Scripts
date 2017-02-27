@@ -28,10 +28,13 @@ $labtechversion = "11"; //Change to 10.5 or 10 if not on LT11.
 date_default_timezone_set($timezone);
 $datenow = date("Y-m-d\TH:i:s", strtotime("-10 minutes"));
 $date7 = date("Y-m-d\TH:i:s", strtotime("-7 days"));
+$timez = new DateTime("now", new DateTimeZone($timezone));
+$utccode = $timez->format('P');
+
 $url = NULL; //to be changed in a moment. Prevents IDE errors.
 if ($labtechversion == "11")
 {
-	$url = $labtechurl . '/WCC2/api/ComputerStubs?$filter=contains(OS,%27Server%27)%20and%20LastCheckin%20lt%20' . $datenow . "Z%20and%20LastCheckin%20gt%20" . $date7 . "Z";
+	$url = $labtechurl . '/WCC2/api/ComputerStubs?$filter=contains(OS,%27Server%27)%20and%20LastCheckin%20lt%20' . $datenow . "$utccode%20and%20LastCheckin%20gt%20" . $date7 . "$utccode";
 }
 else
 {
