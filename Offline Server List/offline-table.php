@@ -119,5 +119,8 @@ foreach($dataTData as $array)
 
 	</tbody>
 </table>
+<?php
+echo '&nbsp;&nbsp;&nbsp;Updated: ' . date("m/d/y h:ia");
+?>
 </div>
 </html>
