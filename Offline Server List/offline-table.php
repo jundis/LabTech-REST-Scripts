@@ -106,11 +106,27 @@ foreach($dataTData as $array)
 {
 	$date=strtotime($array['LastCheckin']); //Convert date entered JSON result to time.
 	$dateformat=date('m-d-Y g:i:sa',$date); //Convert previously converted time to a better time string.
+	if($date < strtotime("-7 days"))
+	{
+		$color = "9599a0";
+	}
+	elseif($date >= strtotime("-7 days") && $date < strtotime("-2 days"))
+	{
+		$color = "e8e545";
+	}
+	elseif($date >= strtotime("-2 days") && $date < strtotime("-4 hours"))
+	{
+		$color = "e2a151";
+	}
+	else
+	{
+		$color = "d48888";
+	}
 	
 	echo "<tr>
 	<td>".$array['Client']."</td>
 	<td>".$array['Name']."</td>
-	<td bgcolor=#d48888>".$dateformat."</td>
+	<td bgcolor=#" . $color . ">".$dateformat."</td>
 	</tr>";
 }
 
