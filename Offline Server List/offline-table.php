@@ -1,6 +1,7 @@
 <html>
 <head>
    <link rel="stylesheet" href="bootstrap.min.css" media="screen">
+   <meta http-equiv="refresh" content="120">
 </head>
 
 <div class="table-responsive">
